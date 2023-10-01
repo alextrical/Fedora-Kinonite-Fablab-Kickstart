@@ -1,3 +1,5 @@
+#!/bin/bash
+
 username=makerspace
 name='Maker Space'
 
