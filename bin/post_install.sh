@@ -85,6 +85,7 @@ flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.freecadweb
 
 #SheetCAM
 (cd ~/Downloads && wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q && mkdir /home/$username/.applications && unzip SheetCam_setupV7.1.35-64.bin -d /home/$username/.applications/SheetCam)
+rpm-ostree install mesa-libGLU
 #mkdir /home/$username/.local/share/Applications
 #mkdir /var/usrlocal/share/applications
 #cat > ~/.local/share/applications/SheetCAM.Desktop << EOF
