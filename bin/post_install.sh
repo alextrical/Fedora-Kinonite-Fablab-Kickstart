@@ -8,17 +8,20 @@ grep -E '^dialout:' /usr/lib/group >> /etc/group
 grep -E '^users:' /usr/lib/group >> /etc/group
     #Allow Passwordless Login
     groupadd -r nopasswdlogin
-useradd -mG nopasswdlogin,dialout,users -c "$name" $username
+adduser -mG nopasswdlogin,dialout,users -c "$name" $username
 
 # #Automatic updates
-# sed -i 's/none/stage/g' /etc/rpm-ostreed.conf  #set to install if set to none
-# sed -i 's/check/stage/g' /etc/rpm-ostreed.conf #set to install if set to none
-# sed -i 's/#AutomaticUpdatePolicy/AutomaticUpdatePolicy/g' /etc/rpm-ostreed.conf #set to install if set to none
-# #systemctl reload rpm-ostreed
-# systemctl enable rpm-ostreed-automatic.timer --now
 git clone https://github.com/tonywalker1/silverblue-update.git /root/Downloads/AutoUpdate
 (cd /root/Downloads/AutoUpdate && ./install.sh)
 #rm -r /root/Downloads/AutoUpdate
+    # sed -i 's/none/stage/g' /etc/rpm-ostreed.conf  #set to install if set to none
+    # sed -i 's/check/stage/g' /etc/rpm-ostreed.conf #set to install if set to none
+    # sed -i 's/#AutomaticUpdatePolicy/AutomaticUpdatePolicy/g' /etc/rpm-ostreed.conf #set to install if set to none
+    # #systemctl reload rpm-ostreed
+    # systemctl enable rpm-ostreed-automatic.timer --now
+
+#Create Folders
+mkdir /home/$username/Desktop /home/$username/Documents /home/$username/Downloads /home/$username/Music /home/$username/Pictures /home/$username/Public /home/$username/Templates /home/$username/Videos /home/$username/.icons /home/$username/.themes /home/$username/.applications
 
 #User Autologin
 sed -i "s/#User=/User=$username/g" /etc/sddm.conf
@@ -34,7 +37,6 @@ echo "[User]" | sudo tee /var/lib/AccountsService/users/$username
 echo "Icon=/var/lib/AccountsService/icons/$username" | sudo tee -a /var/lib/AccountsService/users/$username
 
 #Flatpak use system Theme
-mkdir /home/$username/.icons /home/$username/.themes
 cp -r /usr/share/themes/* /home/$username/.themes
 cp -r /usr/share/icons/* /home/$username/.icons
 
@@ -77,21 +79,25 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.freecadweb.FreeCAD org.librecad.librecad -y
 
 #SheetCAM
-(cd ~/Downloads && wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q && mkdir /home/makerspace/Applications && unzip SheetCam_setupV7.1.35-64.bin -d /home/makerspace/Applications/SheetCam)
+(cd ~/Downloads && wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q && mkdir /home/$username/.applications && unzip SheetCam_setupV7.1.35-64.bin -d /home/$username/.applications/SheetCam)
 rpm-ostree install mesa-libGLU
-#mkdir /home/makerspace/.local/share/Applications
-mkdir /var/usrlocal/share/applications
-cat > /var/usrlocal/share/applications/SheetCAM.Desktop << 'EOF'
+#mkdir /home/$username/.local/share/Applications
+#mkdir /var/usrlocal/share/applications
+#cat > ~/.local/share/applications/SheetCAM.Desktop << EOF
+cat > /var/lib/flatpak/exports/share/applications/SheetCAM.desktop << EOF
 [Desktop Entry]
 Encoding=UTF-8
-Version=1.0
+Value=1.0
 Type=Application
-Terminal=false
-Exec=/home/makerspace/Applications/SheetCam/data/run-sheetcam
-Name=SheetCAM
-Icon=/var/home/makerspace/Applications/SheetCam/data/resources/Bitmaps/Cutter.ico
+Name=SheetCam TNG
+GenericName=CAM software
+Comment=SheetCam TNG V7.1.35
+Categories=Graphics
+Exec="/home/$username/.applications/SheetCam/data/run-sheetcam"
+Icon=/var/home/$username/.applications/SheetCam/dataresources/sheetcamlogo.png
 EOF
-chmod +x /var/usrlocal/share/applications/SheetCAM.Desktop
+chmod +x /var/lib/flatpak/exports/share/applications/SheetCAM.desktop
+update-desktop-database /var/lib/flatpak/exports/share/applications
 
 #Allow user to apply updates
 cat > /etc/polkit-1/rules.d/45-polkit-allow-updates.rules << 'EOF'
@@ -142,6 +148,6 @@ EOF
 # EOF
 
 # ##etherwake without root
-# mkdir /home/makerspace/.local/bin
-# cp /usr/sbin/ether-wake /home/makerspace/.local/bin/etherwake
-# setcap cap_net_raw+ep /home/makerspace/.local/bin/etherwake
+# mkdir /home/$username/.local/bin
+# cp /usr/sbin/ether-wake /home/$username/.local/bin/etherwake
+# setcap cap_net_raw+ep /home/$username/.local/bin/etherwake
