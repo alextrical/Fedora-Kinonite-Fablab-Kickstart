@@ -39,6 +39,8 @@ echo "Icon=/var/lib/AccountsService/icons/$username" | sudo tee -a /var/lib/Acco
 #Flatpak use system Theme
 cp -r /usr/share/themes/* /home/$username/.themes
 cp -r /usr/share/icons/* /home/$username/.icons
+cp -r /usr/share/themes/* ~/.themes
+cp -r /usr/share/icons/* ~/.icons
 
 #Flatpak use system Theme
 flatpak override --filesystem=~/.themes
@@ -72,7 +74,7 @@ kwriteconfig5 --file kscreenlockerrc --group Daemon --key LockGrace 300
 EOF
 
 #Install dependancies and set Login/Lockscreen to use defined keyboard
-rpm-ostree install mesa-libGLU
+rpm-ostree install mesa-libGLU #Required by SheetCAM
 rpm-ostree initramfs-etc --track=/etc/vconsole.conf
 rpm-ostree apply-live
 
@@ -82,13 +84,11 @@ rpm-ostree apply-live
 #Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.freecadweb.FreeCAD org.librecad.librecad -y
+flatpak install flathub com.vscodium.codium cc.arduino.IDE2 com.prusa3d.PrusaSlicer org.libreoffice.LibreOffice org.raspberrypi.rpi-imager -y
 
 #SheetCAM
-(cd ~/Downloads && wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q && mkdir /home/$username/.applications && unzip SheetCam_setupV7.1.35-64.bin -d /home/$username/.applications/SheetCam)
-rpm-ostree install mesa-libGLU
-#mkdir /home/$username/.local/share/Applications
-#mkdir /var/usrlocal/share/applications
-#cat > ~/.local/share/applications/SheetCAM.Desktop << EOF
+wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q -P /root/Downloads 
+unzip /root/Downloads/SheetCam_setupV7.1.35-64.bin -d /home/$username/.applications/SheetCam
 cat > /var/lib/flatpak/exports/share/applications/SheetCAM.desktop << EOF
 [Desktop Entry]
 Encoding=UTF-8
@@ -129,7 +129,7 @@ EOF
 
 
 
-
+#Random notes, for things not needed, or not working correctly yet
 
 # cat > /etc/polkit-1/rules.d/45-polkit-allow-updates.rules << 'EOF'
 # /* Allow users in to update or upgrade without authentication */
