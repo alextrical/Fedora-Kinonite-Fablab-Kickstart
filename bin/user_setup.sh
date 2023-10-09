@@ -20,6 +20,14 @@ kwriteconfig5 --file kscreenlockerrc --group Daemon --key LockGrace 300
 
 
 
+# #Vectric aspire
+# wget https://storage.googleapis.com/vectric_public/AspireTrialEdition_Setup.exe --show-progress -nc -q -P ~/Downloads 
+# WINEPREFIX=~/.vectric WINEARCH=win32 wineboot
+# WINEPREFIX=~/.vectric WINEARCH=win32 wine ~/Downloads/AspireTrialEdition_Setup.exe
+
+# WINEARCH=win64 wine64 wineboot
+
+
 
 #SheetCAM
 wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q -P ~/Downloads 

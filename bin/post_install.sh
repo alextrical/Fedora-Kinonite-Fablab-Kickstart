@@ -35,10 +35,16 @@ EOF
 #     if (action.id == "org.projectatomic.rpmostree1.upgrade" || "org.projectatomic.rpmostree1.deploy" && subject.isInGroup("users")) {
 
 #Install dependancies and set Login/Lockscreen to use defined keyboard
-rpm-ostree install mesa-libGLU #Required by SheetCAM
-rpm-ostree install webkit2gtk4.0 #Required by OrcaSlicer
-rpm-ostree initramfs-etc --track=/etc/vconsole.conf #Use correct keyboard on Login screen?
+rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 --idempotent
+# rpm-ostree install mesa-libGLU #Required by SheetCAM
+# rpm-ostree install webkit2gtk4.0 #Required by OrcaSlicer
+# rpm-ostree install wine-core wine-core.i686 #Required by Vectric Aspire
+                ##rpm-ostree install *.rpm #RPM's can be installed as a layer if required, or they can be extracted into /home/$username/.local i.e.
+                ## rpm2cpio $HOME/Downloads/appimagelauncher.x86_64.rpm  | cpio -D $HOME/Downloads -idmv
+                ## cp -r $HOME/Downloads/usr/* $HOME/.local
+#rpm-ostree initramfs-etc --track=/etc/vconsole.conf #Use correct keyboard on Login screen? Doesn't seem to work
 rpm-ostree apply-live --allow-replacement
+
 
 #Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -53,13 +59,7 @@ flatpak override --env=GTK_THEME=Adwaita-dark
 flatpak override --env=ICON_THEME=breeze-dark
 
 
-
-
-
-
-
 #Create user account
-
 username=makerspace
 name='Maker Space'
 
