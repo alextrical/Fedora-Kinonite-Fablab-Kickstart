@@ -42,15 +42,15 @@ chmod +x ~/Downloads/winetricks
 wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc100_x64.exe" /t REG_SZ /d "" /f
 wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc110_x64.exe" /t REG_SZ /d "" /f
 wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc140_x64.exe" /t REG_SZ /d "" /f
-wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "wininet" /t REG_SZ /d "" /f
+#wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "wininet" /t REG_SZ /d "" /f
 wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "update.exe" /t REG_SZ /d "" /f
 wine ~/Downloads/AspireV10512_Setup.exe /S
 wine ~/Downloads/Aspire_patch_to_v10514.exe /S
 wine REG ADD "HKCU\Software\Vectric\AspireV10\Licence" /v "Key" /t REG_SZ /d "3PNQWA-ZPFXRX-F8HXXR-VSJ3WR-PWARC9-72IHBR-J6SZHY-H8RN6R-GGQ8IU-ABBCES" /f
 wine REG ADD "HKCU\Software\Vectric\AspireV10\Licence" /v "User" /t REG_SZ /d "Maker Space" /f
-#diff -Naru Aspire.orig.exe Aspire.exe > Aspire10512.patch
+# #diff -Naru Aspire.orig.exe Aspire.exe > Aspire10512.patch
 patch "$WINEPREFIX/drive_c/Program Files/Aspire 10.5/x64/Aspire.exe" -b < ~/Downloads/Aspire10512.patch
-
+# git apply ~/Downloads/Aspire10512.patch
 
 
 

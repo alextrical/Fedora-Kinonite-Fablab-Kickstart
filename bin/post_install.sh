@@ -35,16 +35,16 @@ EOF
 #     if (action.id == "org.projectatomic.rpmostree1.upgrade" || "org.projectatomic.rpmostree1.deploy" && subject.isInGroup("users")) {
 
 #Install dependancies and set Login/Lockscreen to use defined keyboard
-rpm-ostree install kompare --idempotent #debug
-rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 --idempotent
+#rpm-ostree install kompare --idempotent #debug
+rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 patch --idempotent
 # rpm-ostree install mesa-libGLU #Required by SheetCAM
 # rpm-ostree install webkit2gtk4.0 #Required by OrcaSlicer
-# rpm-ostree install wine-core wine-core.i686 #Required by Vectric Aspire
+# rpm-ostree install wine-core wine-core.i686 patch #Required by Vectric Aspire
                 ##rpm-ostree install *.rpm #RPM's can be installed as a layer if required, or they can be extracted into /home/$username/.local i.e.
                 ## rpm2cpio $HOME/Downloads/appimagelauncher.x86_64.rpm  | cpio -D $HOME/Downloads -idmv
                 ## cp -r $HOME/Downloads/usr/* $HOME/.local
 #rpm-ostree initramfs-etc --track=/etc/vconsole.conf #Use correct keyboard on Login screen? Doesn't seem to work
-rpm-ostree apply-live --allow-replacement
+#rpm-ostree apply-live --allow-replacement
 
 
 #Flatpak
@@ -91,3 +91,8 @@ cat > /home/$username/Desktop/fetch_user_setup.sh << EOL
 bash <(curl -s https://raw.githubusercontent.com/alextrical/Fedora-Kinonite-Fablab-Kickstart/main/bin/user_setup.sh)
 EOL
 chmod +x /home/$username/Desktop/fetch_user_setup.sh
+
+#Reboot post install, to apply changes
+echo "System rebooting in 1 minute"
+sleep 60
+systemctl reboot
