@@ -35,6 +35,7 @@ EOF
 #     if (action.id == "org.projectatomic.rpmostree1.upgrade" || "org.projectatomic.rpmostree1.deploy" && subject.isInGroup("users")) {
 
 #Install dependancies and set Login/Lockscreen to use defined keyboard
+rpm-ostree install kompare --idempotent #debug
 rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 --idempotent
 # rpm-ostree install mesa-libGLU #Required by SheetCAM
 # rpm-ostree install webkit2gtk4.0 #Required by OrcaSlicer
@@ -48,7 +49,7 @@ rpm-ostree apply-live --allow-replacement
 
 #Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.gtk.Gtk3theme.Breeze -y
+flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.gtk.Gtk3theme.Breeze org.kde.KStyle.Adwaita -y
 # flatpak install flathub org.freecadweb.FreeCAD org.librecad.librecad -y
 # flatpak install flathub org.openscad.OpenSCAD com.vscodium.codium cc.arduino.IDE2 com.prusa3d.PrusaSlicer org.libreoffice.LibreOffice org.raspberrypi.rpi-imager -y
 
@@ -84,6 +85,7 @@ sed -i "s/#User=/User=$username/g" /etc/sddm.conf
 sed -i 's/#Session=/Session=plasma.desktop/g' /etc/sddm.conf
 
 #Create link to user setup
+mkdir /home/$username/Desktop
 cat > /home/$username/Desktop/fetch_user_setup.sh << EOL
 #!/bin/bash
 bash <(curl -s https://raw.githubusercontent.com/alextrical/Fedora-Kinonite-Fablab-Kickstart/main/bin/user_setup.sh)

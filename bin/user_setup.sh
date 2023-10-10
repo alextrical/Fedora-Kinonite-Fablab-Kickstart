@@ -1,3 +1,8 @@
+# #Debug
+# #Copy user folder
+# cp -r /home/makerspace /home/bak
+# kompare
+
 #Create Folders
 mkdir -p $HOME/.icons $HOME/.themes $HOME/.local/bin $HOME/.local/share/applications $HOME/git
 
@@ -21,9 +26,46 @@ kwriteconfig5 --file kscreenlockerrc --group Daemon --key LockGrace 300
 
 
 # #Vectric aspire
-# wget https://storage.googleapis.com/vectric_public/AspireTrialEdition_Setup.exe --show-progress -nc -q -P ~/Downloads 
-# WINEPREFIX=~/.vectric WINEARCH=win32 wineboot
-# WINEPREFIX=~/.vectric WINEARCH=win32 wine ~/Downloads/AspireTrialEdition_Setup.exe
+export env WINEPREFIX=~/.vectric
+export env WINEDEBUG=fixme-all
+export env WINEARCH=win64
+rm -r $WINEPREFIX
+#https://medium.com/@acpanjan/download-google-drive-files-using-wget-3c2c025a8b99
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1Pq1akvhUrlUDaivkmYEw4bgy2oSPz-dE' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1Pq1akvhUrlUDaivkmYEw4bgy2oSPz-dE" -nc -O ~/Downloads/AspireV10512_Setup.exe && rm -rf /tmp/cookies.txt
+wget storage.vectric.com/patches/v10_5/Aspire/patches/Aspire_patch_to_v10514.exe -nc -P ~/Downloads
+wget  https://raw.githubusercontent.com/alextrical/Fedora-Kinonite-Fablab-Kickstart/main/patches/Aspire10512.patch -nc -P ~/Downloads
+wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -nc -P ~/Downloads
+chmod +x ~/Downloads/winetricks
+~/Downloads/winetricks -q vcrun2010 vcrun2012 vcrun2015
+~/Downloads/winetricks -q win10
+#wget https://storage.googleapis.com/vectric_public/AspireTrialEdition_Setup.exe --show-progress -nc -q -P ~/Downloads 
+wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc100_x64.exe" /t REG_SZ /d "" /f
+wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc110_x64.exe" /t REG_SZ /d "" /f
+wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "vcredist_vc140_x64.exe" /t REG_SZ /d "" /f
+wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "wininet" /t REG_SZ /d "" /f
+wine REG ADD "HKCU\Software\Wine\DllOverrides" /v "update.exe" /t REG_SZ /d "" /f
+wine ~/Downloads/AspireV10512_Setup.exe /S
+wine ~/Downloads/Aspire_patch_to_v10514.exe /S
+wine REG ADD "HKCU\Software\Vectric\AspireV10\Licence" /v "Key" /t REG_SZ /d "3PNQWA-ZPFXRX-F8HXXR-VSJ3WR-PWARC9-72IHBR-J6SZHY-H8RN6R-GGQ8IU-ABBCES" /f
+wine REG ADD "HKCU\Software\Vectric\AspireV10\Licence" /v "User" /t REG_SZ /d "Maker Space" /f
+#diff -Naru Aspire.orig.exe Aspire.exe > Aspire10512.patch
+patch "$WINEPREFIX/drive_c/Program Files/Aspire 10.5/x64/Aspire.exe" -b < ~/Downloads/Aspire10512.patch
+
+
+
+
+
+
+#https://storage.googleapis.com/storage.vectric.com/patches/v10_5/Aspire/patches/Aspire_patch_to_v10502.exe
+#https://storage.googleapis.com/storage.vectric.com/patches/v10_5/Aspire/patches/Aspire_patch_to_v10514.exe
+#https://storage.googleapis.com/storage.vectric.com/patches/v9/Aspire/patches/Aspire_patch_to_v9015.exe
+
+storage.vectric.com/patches/v11_0/Aspire/patches/Aspire_patch_to_v11016.exe
+#https://kb.thelab.ms/display/EQ/Using+VCarve+Pro+on+Your+Own+Computer
+#https://storage.vectric.com/VCarveProTrialEditionV11_SetupENU.exe
+#http://storage.vectric.com/gadgets/V10/Vectric_Gadget_SDK_V10.vgadget
+#https://mega.nz/%23!XkA3jQLD!dOjpIjTHo2bCaTwH6uw-gSPJIMzW__djynkJ9NX_9hk
+#https://yadi.sk/d/A7_BNULT3TbkUw
 
 # WINEARCH=win64 wine64 wineboot
 
