@@ -53,24 +53,6 @@ patch "$WINEPREFIX/drive_c/Program Files/Aspire 10.5/x64/Aspire.exe" -b < ~/Down
 # git apply ~/Downloads/Aspire10512.patch
 
 
-
-
-
-#https://storage.googleapis.com/storage.vectric.com/patches/v10_5/Aspire/patches/Aspire_patch_to_v10502.exe
-#https://storage.googleapis.com/storage.vectric.com/patches/v10_5/Aspire/patches/Aspire_patch_to_v10514.exe
-#https://storage.googleapis.com/storage.vectric.com/patches/v9/Aspire/patches/Aspire_patch_to_v9015.exe
-
-storage.vectric.com/patches/v11_0/Aspire/patches/Aspire_patch_to_v11016.exe
-#https://kb.thelab.ms/display/EQ/Using+VCarve+Pro+on+Your+Own+Computer
-#https://storage.vectric.com/VCarveProTrialEditionV11_SetupENU.exe
-#http://storage.vectric.com/gadgets/V10/Vectric_Gadget_SDK_V10.vgadget
-#https://mega.nz/%23!XkA3jQLD!dOjpIjTHo2bCaTwH6uw-gSPJIMzW__djynkJ9NX_9hk
-#https://yadi.sk/d/A7_BNULT3TbkUw
-
-# WINEARCH=win64 wine64 wineboot
-
-
-
 #SheetCAM
 wget https://www.sheetcam.com/Downloads/akp3fldwqh/SheetCam_setupV7.1.35-64.bin --show-progress -nc -q -P ~/Downloads 
 unzip ~/Downloads/SheetCam_setupV7.1.35-64.bin "data/*" -d $HOME/.local/share/SheetCam
