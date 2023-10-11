@@ -36,10 +36,10 @@ EOF
 
 #Install dependancies and set Login/Lockscreen to use defined keyboard
 #rpm-ostree install kompare --idempotent #debug
-rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 patch cabextract --idempotent
+rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 wine-ldap patch cabextract --idempotent
 # rpm-ostree install mesa-libGLU #Required by SheetCAM
 # rpm-ostree install webkit2gtk4.0 #Required by OrcaSlicer
-# rpm-ostree install wine-core wine-core.i686 patch cabextract #Required by Vectric Aspire
+# rpm-ostree install wine-core wine-core.i686 wine-ldap patch cabextract #Required by Vectric Aspire
                 ##rpm-ostree install *.rpm #RPM's can be installed as a layer if required, or they can be extracted into /home/$username/.local i.e.
                 ## rpm2cpio $HOME/Downloads/appimagelauncher.x86_64.rpm  | cpio -D $HOME/Downloads -idmv
                 ## cp -r $HOME/Downloads/usr/* $HOME/.local
