@@ -49,9 +49,9 @@ rpm-ostree install mesa-libGLU webkit2gtk4.0 wine-core wine-core.i686 patch cabe
 
 #Flatpak
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.gtk.Gtk3theme.Breeze org.kde.KStyle.Adwaita -y
-# flatpak install flathub org.freecadweb.FreeCAD org.librecad.librecad -y
-# flatpak install flathub org.openscad.OpenSCAD com.vscodium.codium cc.arduino.IDE2 com.prusa3d.PrusaSlicer org.libreoffice.LibreOffice org.raspberrypi.rpi-imager -y
+flatpak install flathub org.inkscape.Inkscape org.blender.Blender org.gtk.Gtk3theme.Breeze -y
+flatpak install flathub org.freecadweb.FreeCAD org.librecad.librecad -y
+flatpak install flathub org.openscad.OpenSCAD com.vscodium.codium cc.arduino.IDE2 com.prusa3d.PrusaSlicer org.libreoffice.LibreOffice org.raspberrypi.rpi-imager -y
 
 #Flatpak use system Theme
 flatpak override --filesystem=~/.themes
